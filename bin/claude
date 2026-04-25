@@ -1,0 +1,4 @@
+#!/bin/bash
+
+devcontainer exec --workspace-folder "$(dirname "$0")/.." claude
+

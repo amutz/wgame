@@ -1,0 +1,16 @@
+{
+  "name": "claude-automation",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind",
+    "source=${localEnv:HOME}/.claude,target=/home/vscode/.claude,type=bind"
+ ],
+  //"postCreateCommand": "npm install -g @anthropic-ai/claude-code",
+  "postCreateCommand": "curl -fsSL https://claude.ai/install.sh | bash",
+  //"remoteUser": "vscode",
+  "customizations": {
+    "vscode": {
+      "extensions": []
+    }
+  }
+}

@@ -161,4 +161,81 @@ const LEVELS = [
     // What you get for completing this planet.
     reward: "Homing missile",
   },
+
+  // ----- LEVEL 3: ICE PLANET -----
+  {
+    name: "Ice Planet",
+    width: 4000,
+    height: 600,
+    skyColor: "#cfe6f5", // pale winter sky
+    fogColor: "#3d5a7a", // dim blue horizon
+    groundColor: "#9bc8df", // ice
+    groundEdge:  "#ffffff", // snow on top of every platform
+    enemySprite: ICE_CRITTER_SPRITE,
+    slippery: true,         // <-- makes the floor slide!
+    playerStart: { x: 60, y: 400 },
+
+    // Wider main platforms than usual since ice makes landing tricky.
+    platforms: [
+      { x: 0,    y: 540, w: 800,  h: 60 },
+      { x: 940,  y: 540, w: 600,  h: 60 },
+      { x: 1680, y: 540, w: 700,  h: 60 },
+      { x: 2520, y: 540, w: 540,  h: 60 },
+      { x: 3200, y: 540, w: 800,  h: 60 },
+
+      // Floating ice platforms (placed generously).
+      { x: 280,  y: 440, w: 160, h: 20 },
+      { x: 520,  y: 360, w: 160, h: 20 },
+      { x: 1060, y: 420, w: 160, h: 20 },
+      { x: 1280, y: 320, w: 180, h: 20 },
+      { x: 1780, y: 420, w: 160, h: 20 },
+      { x: 2020, y: 320, w: 160, h: 20 },
+      { x: 2240, y: 240, w: 160, h: 20 },
+      { x: 2620, y: 380, w: 180, h: 20 },
+      { x: 2860, y: 280, w: 180, h: 20 },
+      { x: 3300, y: 420, w: 180, h: 20 },
+      { x: 3540, y: 320, w: 180, h: 20 },
+    ],
+
+    // A bit fewer enemies — sliding into one is already punishing.
+    enemies: [
+      { x: 380,  y: 540 },
+      { x: 600,  y: 360 },
+      { x: 1120, y: 420 },
+      { x: 1340, y: 320 },
+      { x: 1840, y: 540 },
+      { x: 2080, y: 320 },
+      { x: 2300, y: 240 },
+      { x: 2700, y: 380 },
+      { x: 2940, y: 280 },
+      { x: 3380, y: 420 },
+      { x: 3620, y: 320 },
+    ],
+
+    // Snow-capped pine trees in the foreground.
+    pines: [
+      { x: 160,  y: 540, h: 200 },
+      { x: 720,  y: 540, h: 240 },
+      { x: 1500, y: 540, h: 220 },
+      { x: 2440, y: 540, h: 260 },
+      { x: 3080, y: 540, h: 230 },
+      { x: 3760, y: 540, h: 250 },
+    ],
+
+    // Distant snowy mountains in the background.
+    mountains: [
+      { x: 0,    y: 540, w: 700,  h: 240 },
+      { x: 600,  y: 540, w: 900,  h: 320 },
+      { x: 1400, y: 540, w: 800,  h: 280 },
+      { x: 2100, y: 540, w: 1000, h: 360 },
+      { x: 3000, y: 540, w: 800,  h: 300 },
+      { x: 3700, y: 540, w: 700,  h: 260 },
+    ],
+
+    // Where the goal is. Touching it finishes the level.
+    goal: { x: 3860, y: 480 },
+
+    // What you get for completing this planet.
+    reward: "Dash",
+  },
 ];

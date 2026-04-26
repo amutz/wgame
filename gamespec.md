@@ -110,14 +110,18 @@ You're an astronaut traveling the galaxy. On each planet you land, dangerous cre
   - Side-scrolling level (3600px wide) with sandstone ledges, parallax dunes and cacti.
   - New scavenger alien sprite (hooded, red goggles).
   - Level progression: beating Planet 1 takes you to Planet 2; banner shows the Homing Missile reward.
+- Planet 3 (Ice) playable end-to-end:
+  - Side-scrolling level (4000px wide) with snow-capped pine trees and parallax mountains.
+  - New ice critter sprite (icy spikes, red mouth).
+  - **Slippery-floor physics** — the player accelerates and glides instead of stopping instantly. Tunable via `ICE_ACCEL` and `ICE_FRICTION` in `game.js`.
+  - Banner shows the Dash reward.
 
 ### 🔜 Next up
-1. **Tune planets 1 & 2** — jump feel, enemy placement, anything that doesn't feel right.
-2. **Add the abilities system** — shield first (since it's the planet 1 reward), then homing missile, then unlock as levels progress.
-3. **Build planet 3 (Ice)** — slippery floor, new enemy variant, dash ability.
-4. **Planets 4 → 5** in order, each adding one ability and one new enemy or hazard twist.
-5. **Boss fight** on planet 5 — distinct from levels 1–4 (single arena, multi-phase HP, requires nukes).
-6. **Polish:** title screen, planet-select / star map, sound effects, music, save progress between sessions.
+1. **Tune planets 1 → 3** — jump feel, ice friction, enemy placement, anything that doesn't feel right.
+2. **Add the abilities system** — shield first, then homing missile, then dash, unlocked as levels progress.
+3. **Build planet 4 (Robot Factory)** — robot enemies, new ability (likely Double Jump).
+4. **Planet 5** with the boss fight — distinct from levels 1–4 (single arena, multi-phase HP, requires nukes).
+5. **Polish:** title screen, planet-select / star map, sound effects, music, save progress between sessions.
 
 ---
 

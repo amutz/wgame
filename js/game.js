@@ -11,6 +11,8 @@ const BULLET_SPEED      = 9;     // how fast bullets fly
 const SHOOT_COOLDOWN    = 14;    // frames between shots (60 = 1 sec)
 const PLAYER_MAX_HEALTH = 3;
 const ENEMY_SPEED       = 1.4;
+const ICE_ACCEL         = 0.4;   // how quickly you build speed on ice
+const ICE_FRICTION      = 0.92;  // how quickly you stop on ice (1 = never)
 
 // ---------- GLOBAL STATE ----------
 const canvas = document.getElementById("game");
@@ -140,8 +142,10 @@ function goalHitbox(level) {
 // ---------- DRAWING ----------
 function draw() {
   drawBackground();
+  drawMountains();
   drawDunes();
   drawTrees();
+  drawPines();
   drawCacti();
   drawPlatforms();
   drawSprite(ctx, GOAL_SPRITE,
@@ -214,6 +218,75 @@ function drawDunes() {
     ctx.beginPath();
     ctx.ellipse(px + d.w / 2, d.y + 8, d.w / 2 - 18, d.h - 14, 0, Math.PI, 2 * Math.PI);
     ctx.fill();
+  }
+}
+
+function drawMountains() {
+  if (!currentLevel.mountains) return;
+  for (const m of currentLevel.mountains) {
+    // Very slow parallax — distant mountains barely move.
+    const px = m.x - camera.x * 0.25;
+    if (px + m.w < -40 || px > canvas.width + 40) continue;
+    const peakX = px + m.w / 2;
+    const peakY = m.y - m.h;
+    // Mountain body
+    ctx.fillStyle = "#5d6e8a";
+    ctx.beginPath();
+    ctx.moveTo(px, m.y);
+    ctx.lineTo(peakX, peakY);
+    ctx.lineTo(px + m.w, m.y);
+    ctx.closePath();
+    ctx.fill();
+    // Snow cap (top third)
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.moveTo(peakX - m.w * 0.18, peakY + m.h * 0.32);
+    ctx.lineTo(peakX, peakY);
+    ctx.lineTo(peakX + m.w * 0.18, peakY + m.h * 0.32);
+    ctx.lineTo(peakX + m.w * 0.10, peakY + m.h * 0.30);
+    ctx.lineTo(peakX,             peakY + m.h * 0.40);
+    ctx.lineTo(peakX - m.w * 0.10, peakY + m.h * 0.30);
+    ctx.closePath();
+    ctx.fill();
+  }
+}
+
+function drawPines() {
+  if (!currentLevel.pines) return;
+  for (const t of currentLevel.pines) {
+    // Mid parallax — closer than mountains, farther than the foreground.
+    const px = t.x - camera.x * 0.7;
+    if (px < -60 || px > canvas.width + 60) continue;
+    // Trunk
+    ctx.fillStyle = "#4a2e1a";
+    ctx.fillRect(px - 6, t.y - 24, 12, 24);
+    // Three layers of pine triangles, top is smallest.
+    const layers = 3;
+    const totalH = t.h - 24;
+    ctx.fillStyle = "#1f5a32";
+    for (let i = 0; i < layers; i++) {
+      const layerH = totalH / layers + 18;
+      const layerY = t.y - 24 - (totalH / layers) * (i + 1);
+      const widthAtBase = 70 - i * 14;
+      ctx.beginPath();
+      ctx.moveTo(px - widthAtBase, layerY + layerH);
+      ctx.lineTo(px, layerY);
+      ctx.lineTo(px + widthAtBase, layerY + layerH);
+      ctx.closePath();
+      ctx.fill();
+    }
+    // Snow on top of each layer
+    ctx.fillStyle = "#ffffff";
+    for (let i = 0; i < layers; i++) {
+      const layerY = t.y - 24 - (totalH / layers) * (i + 1);
+      const widthAtBase = 70 - i * 14;
+      ctx.beginPath();
+      ctx.moveTo(px - widthAtBase * 0.55, layerY + 10);
+      ctx.lineTo(px, layerY);
+      ctx.lineTo(px + widthAtBase * 0.55, layerY + 10);
+      ctx.closePath();
+      ctx.fill();
+    }
   }
 }
 

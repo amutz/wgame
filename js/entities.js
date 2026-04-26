@@ -23,9 +23,25 @@ function createPlayer(x, y) {
 
 function updatePlayer(p, level, input) {
   // --- Horizontal movement ---
-  if (input.left)  { p.vx = -MOVE_SPEED; p.facing = -1; }
-  else if (input.right) { p.vx =  MOVE_SPEED; p.facing =  1; }
-  else p.vx = 0;
+  if (level.slippery) {
+    // Ice physics: accelerate toward MOVE_SPEED, glide when no input.
+    if (input.left) {
+      p.vx -= ICE_ACCEL;
+      if (p.vx < -MOVE_SPEED) p.vx = -MOVE_SPEED;
+      p.facing = -1;
+    } else if (input.right) {
+      p.vx += ICE_ACCEL;
+      if (p.vx >  MOVE_SPEED) p.vx =  MOVE_SPEED;
+      p.facing = 1;
+    } else {
+      p.vx *= ICE_FRICTION;
+      if (Math.abs(p.vx) < 0.05) p.vx = 0;
+    }
+  } else {
+    if (input.left)  { p.vx = -MOVE_SPEED; p.facing = -1; }
+    else if (input.right) { p.vx =  MOVE_SPEED; p.facing =  1; }
+    else p.vx = 0;
+  }
 
   // --- Jumping ---
   if (input.jumpPressed && p.onGround) {

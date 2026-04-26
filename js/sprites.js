@@ -111,6 +111,39 @@ const SCAVENGER_SPRITE = {
   ],
 };
 
+// --- Ice critter (16 wide x 16 tall) ---
+// W=snow white  C=light cyan body  B=dark blue outline
+// K=black eye   R=red mouth        I=icy spike
+const ICE_CRITTER_SPRITE = {
+  scale: 2,
+  colors: {
+    W: "#ffffff",
+    C: "#a8e0f0",
+    B: "#2c4a78",
+    K: "#0a0a0a",
+    R: "#d44a4a",
+    I: "#cfe9f5",
+  },
+  pixels: [
+    "..I..I.II.I..I..",
+    "..WWWWWWWWWWWW..",
+    ".WWCCCCCCCCCCWW.",
+    ".WCCKKCCCCKKCCW.",
+    ".WCCKKCCCCKKCCW.",
+    ".WCCCCCCCCCCCCW.",
+    ".WCCCCRRRRCCCCW.",
+    ".WCCCRRRRRRCCCW.",
+    ".WCCCCRRRRCCCCW.",
+    ".WCCCCCCCCCCCCW.",
+    ".BCCCCCCCCCCCCB.",
+    ".BBCCCCCCCCCCBB.",
+    "..BBBCCCCCCBBB..",
+    "....BBBCCBBB....",
+    "....BB....BB....",
+    "................",
+  ],
+};
+
 // --- Bullet (small laser bolt, 6x4) ---
 const BULLET_SPRITE = {
   scale: 2,

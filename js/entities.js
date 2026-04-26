@@ -75,12 +75,14 @@ function drawPlayer(ctx, p, camera) {
   drawSprite(ctx, PLAYER_SPRITE, p.x - camera.x, p.y - camera.y, p.facing < 0);
 }
 
-// ---------- ENEMY (jungle alien) ----------
-function createEnemy(x, y) {
-  const w = spriteWidth(ALIEN_SPRITE);
-  const h = spriteHeight(ALIEN_SPRITE);
+// ---------- ENEMY (per-level sprite) ----------
+function createEnemy(x, y, sprite) {
+  const spr = sprite || ALIEN_SPRITE;
+  const w = spriteWidth(spr);
+  const h = spriteHeight(spr);
   return {
     kind: "enemy",
+    sprite: spr,
     x: x - w / 2,            // x in level data is the center
     y: y - h,                // y is the feet, so subtract height
     w, h,
@@ -118,7 +120,7 @@ function updateEnemy(e, level) {
 }
 
 function drawEnemy(ctx, e, camera) {
-  drawSprite(ctx, ALIEN_SPRITE, e.x - camera.x, e.y - camera.y, e.vx > 0);
+  drawSprite(ctx, e.sprite, e.x - camera.x, e.y - camera.y, e.vx > 0);
 }
 
 // ---------- BULLET ----------

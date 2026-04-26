@@ -78,6 +78,39 @@ const ALIEN_SPRITE = {
   ],
 };
 
+// --- Desert scavenger alien (16 wide x 16 tall) ---
+// T=tan body  D=dark brown outline  R=red goggle lens  K=black pupil
+// H=hood gray  M=metal silver buckle
+const SCAVENGER_SPRITE = {
+  scale: 2,
+  colors: {
+    T: "#c9905a",
+    D: "#5a3018",
+    R: "#e44a3a",
+    K: "#1a0a04",
+    H: "#7a6a5a",
+    M: "#c8c8d0",
+  },
+  pixels: [
+    "....HHHHHHHH....",
+    "...HHHHHHHHHH...",
+    "..HHTTTTTTTTHH..",
+    "..HTTTTTTTTTTH..",
+    "..HTRRKKKKRRTH..",
+    "..HTRRKKKKRRTH..",
+    "..HTTTTTTTTTTH..",
+    "..HTTTMMMMTTTH..",
+    "...DTTTMMTTTD...",
+    "...DTTTTTTTTD...",
+    "...DTTTTTTTTD...",
+    "...DTDDDDDDTD...",
+    "...DTDD..DDTD...",
+    "...DDD....DDD...",
+    "...DD......DD...",
+    "................",
+  ],
+};
+
 // --- Bullet (small laser bolt, 6x4) ---
 const BULLET_SPRITE = {
   scale: 2,

@@ -52,11 +52,17 @@ function readInput() {
 function startLevel(level) {
   currentLevel = level;
   player = createPlayer(level.playerStart.x, level.playerStart.y);
-  enemies = level.enemies.map(e => createEnemy(e.x, e.y));
+  enemies = level.enemies.map(e => createEnemy(e.x, e.y, level.enemySprite));
   bullets = [];
   camera.x = 0;
   camera.y = 0;
   gameState = "playing";
+}
+
+function nextLevel() {
+  const i = LEVELS.indexOf(currentLevel);
+  if (i >= 0 && i < LEVELS.length - 1) startLevel(LEVELS[i + 1]);
+  else startLevel(currentLevel);
 }
 
 // ---------- MAIN LOOP ----------
@@ -64,7 +70,10 @@ function update() {
   frameCount++;
 
   if (gameState !== "playing") {
-    if (justPressed.KeyR) startLevel(currentLevel);
+    if (justPressed.KeyR) {
+      if (gameState === "won") nextLevel();
+      else startLevel(currentLevel);
+    }
     return;
   }
 
@@ -131,7 +140,9 @@ function goalHitbox(level) {
 // ---------- DRAWING ----------
 function draw() {
   drawBackground();
+  drawDunes();
   drawTrees();
+  drawCacti();
   drawPlatforms();
   drawSprite(ctx, GOAL_SPRITE,
              currentLevel.goal.x - camera.x,
@@ -140,8 +151,13 @@ function draw() {
   for (const b of bullets) drawBullet(ctx, b, camera);
   drawPlayer(ctx, player, camera);
   drawHUD();
-  if (gameState === "won")  drawBanner("LEVEL COMPLETE!", "You earned: " + currentLevel.reward, "#7afc7a");
-  if (gameState === "lost") drawBanner("GAME OVER",       "Press R to try again",                "#ff6a6a");
+  if (gameState === "won") {
+    const i = LEVELS.indexOf(currentLevel);
+    const isLast = i === LEVELS.length - 1;
+    const hint = isLast ? "Press R to play again" : "Press R for the next planet";
+    drawBanner("LEVEL COMPLETE!", "You earned: " + currentLevel.reward, "#7afc7a", hint);
+  }
+  if (gameState === "lost") drawBanner("GAME OVER", "Press R to try again", "#ff6a6a", "Press R to restart");
 }
 
 function drawBackground() {
@@ -184,6 +200,50 @@ function drawTrees() {
   }
 }
 
+function drawDunes() {
+  if (!currentLevel.dunes) return;
+  for (const d of currentLevel.dunes) {
+    // Slow parallax — distant dunes drift behind everything.
+    const px = d.x - camera.x * 0.4;
+    if (px + d.w < -40 || px > canvas.width + 40) continue;
+    ctx.fillStyle = "#8a4f2a";
+    ctx.beginPath();
+    ctx.ellipse(px + d.w / 2, d.y, d.w / 2, d.h, 0, Math.PI, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillStyle = "#d8a766";
+    ctx.beginPath();
+    ctx.ellipse(px + d.w / 2, d.y + 8, d.w / 2 - 18, d.h - 14, 0, Math.PI, 2 * Math.PI);
+    ctx.fill();
+  }
+}
+
+function drawCacti() {
+  if (!currentLevel.cacti) return;
+  for (const c of currentLevel.cacti) {
+    // Foreground-ish parallax (a touch slower than the camera).
+    const px = c.x - camera.x * 0.85;
+    if (px < -60 || px > canvas.width + 60) continue;
+    // Trunk
+    ctx.fillStyle = "#2f6d3a";
+    ctx.fillRect(px - 8, c.y - c.h, 16, c.h);
+    // Outline shading
+    ctx.fillStyle = "#1f4a26";
+    ctx.fillRect(px + 4, c.y - c.h, 4, c.h);
+    // Arms (a little one each side)
+    const armY = c.y - c.h * 0.55;
+    ctx.fillStyle = "#2f6d3a";
+    ctx.fillRect(px - 22, armY,        14, 8);
+    ctx.fillRect(px - 22, armY - 22,   8, 22);
+    ctx.fillRect(px + 8,  armY - 12,   14, 8);
+    ctx.fillRect(px + 14, armY - 30,   8, 22);
+    // Spines (tiny dots)
+    ctx.fillStyle = "#f4e2a8";
+    for (let i = 0; i < c.h; i += 8) {
+      ctx.fillRect(px - 1, c.y - c.h + i, 2, 2);
+    }
+  }
+}
+
 function drawPlatforms() {
   for (const p of currentLevel.platforms) {
     const x = p.x - camera.x;
@@ -214,7 +274,7 @@ function drawHUD() {
   ctx.textAlign = "left";
 }
 
-function drawBanner(title, subtitle, color) {
+function drawBanner(title, subtitle, color, hint) {
   ctx.fillStyle = "rgba(0, 0, 0, 0.6)";
   ctx.fillRect(0, 220, canvas.width, 160);
   ctx.fillStyle = color;
@@ -226,7 +286,7 @@ function drawBanner(title, subtitle, color) {
   ctx.fillText(subtitle, canvas.width / 2, 320);
   ctx.font = "14px system-ui, sans-serif";
   ctx.fillStyle = "#a0a0b8";
-  ctx.fillText("Press R to restart", canvas.width / 2, 350);
+  ctx.fillText(hint || "Press R to restart", canvas.width / 2, 350);
   ctx.textAlign = "left";
 }
 

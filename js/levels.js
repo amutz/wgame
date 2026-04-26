@@ -18,6 +18,7 @@ const LEVELS = [
     fogColor: "#0f1f1a", // far background tint
     groundColor: "#2d5a2d",
     groundEdge:  "#3fa84a", // bright top edge of platforms
+    enemySprite: ALIEN_SPRITE,
     playerStart: { x: 60, y: 400 },
 
     // Solid platforms the player can stand on.
@@ -73,5 +74,91 @@ const LEVELS = [
 
     // What you get for completing this planet.
     reward: "Shield",
+  },
+
+  // ----- LEVEL 2: DESERT PLANET -----
+  {
+    name: "Desert Planet",
+    width: 3600,
+    height: 600,
+    skyColor: "#f4a96b", // orange dawn
+    fogColor: "#7a3a2e", // red sunset haze
+    groundColor: "#b88248",
+    groundEdge:  "#e8c878", // bright sand on top
+    enemySprite: SCAVENGER_SPRITE,
+    playerStart: { x: 60, y: 400 },
+
+    // Solid platforms — sandstone ledges and broken ground.
+    platforms: [
+      // Main ground (with gaps you can fall through)
+      { x: 0,    y: 540, w: 600,  h: 60 },
+      { x: 740,  y: 540, w: 360,  h: 60 },
+      { x: 1240, y: 540, w: 280,  h: 60 },
+      { x: 1660, y: 540, w: 460,  h: 60 },
+      { x: 2260, y: 540, w: 380,  h: 60 },
+      { x: 2780, y: 540, w: 820,  h: 60 },
+
+      // Sandstone steps and floating rocks
+      { x: 260,  y: 460, w: 100, h: 20 },
+      { x: 420,  y: 380, w: 100, h: 20 },
+      { x: 600,  y: 320, w: 120, h: 20 },
+      { x: 820,  y: 420, w: 140, h: 20 },
+      { x: 1060, y: 340, w: 120, h: 20 },
+      { x: 1280, y: 420, w: 120, h: 20 },
+      { x: 1480, y: 340, w: 140, h: 20 },
+      { x: 1740, y: 420, w: 140, h: 20 },
+      { x: 1960, y: 340, w: 120, h: 20 },
+      { x: 2160, y: 260, w: 120, h: 20 },
+      { x: 2380, y: 380, w: 140, h: 20 },
+      { x: 2580, y: 300, w: 140, h: 20 },
+      { x: 2820, y: 420, w: 140, h: 20 },
+      { x: 3040, y: 340, w: 160, h: 20 },
+      { x: 3280, y: 260, w: 160, h: 20 },
+    ],
+
+    // Scavenger aliens patrolling the dunes.
+    enemies: [
+      { x: 380,  y: 540 },
+      { x: 660,  y: 320 },
+      { x: 880,  y: 540 },
+      { x: 1120, y: 340 },
+      { x: 1340, y: 540 },
+      { x: 1540, y: 340 },
+      { x: 1820, y: 540 },
+      { x: 2020, y: 340 },
+      { x: 2220, y: 260 },
+      { x: 2440, y: 380 },
+      { x: 2640, y: 300 },
+      { x: 2900, y: 540 },
+      { x: 3120, y: 340 },
+      { x: 3340, y: 260 },
+    ],
+
+    // Cacti decorations in the foreground.
+    cacti: [
+      { x: 180, y: 540, h: 90 },
+      { x: 700, y: 540, h: 70 },
+      { x: 1180, y: 540, h: 110 },
+      { x: 1600, y: 540, h: 80 },
+      { x: 2120, y: 540, h: 100 },
+      { x: 2700, y: 540, h: 90 },
+      { x: 3200, y: 540, h: 110 },
+    ],
+
+    // Sand dune silhouettes in the background.
+    dunes: [
+      { x: 0,    y: 540, w: 600,  h: 120 },
+      { x: 500,  y: 540, w: 700,  h: 160 },
+      { x: 1100, y: 540, w: 800,  h: 140 },
+      { x: 1700, y: 540, w: 900,  h: 180 },
+      { x: 2400, y: 540, w: 700,  h: 130 },
+      { x: 3000, y: 540, w: 700,  h: 170 },
+    ],
+
+    // Where the goal is. Touching it finishes the level.
+    goal: { x: 3460, y: 480 },
+
+    // What you get for completing this planet.
+    reward: "Homing missile",
   },
 ];
